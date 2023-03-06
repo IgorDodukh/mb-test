@@ -1,4 +1,3 @@
-import time
 from datetime import datetime
 from pathlib import Path
 
@@ -19,26 +18,19 @@ class ConfiguratorPage(BasePage):
         self.min_price = None
         self.max_price = None
 
-    def scroll_to_filters(self):
-        pass
-        self.driver.execute_script('window.scrollBy(0, 800)')
-
-    def click_fuel_dropdown(self):
+    def open_fuel_dropdown(self):
         self.wait_for_element_visible(ShadowRoot.CONFIGURATOR)
         shadow_root = self.get_shadow_root(root_type=ShadowRoot.CONFIGURATOR)
         element = shadow_root.find_element(By.CSS_SELECTOR, ConfigLocators.FUEL_DROPDOWN)
         self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
-        time.sleep(2)
         element.click()
 
-    def click_fuel_type(self, fuel_type: FuelType):
+    def select_fuel_type(self, fuel_type: FuelType):
         shadow_root = self.get_shadow_root(root_type=ShadowRoot.CONFIGURATOR)
         element = shadow_root.find_element(By.CSS_SELECTOR, ConfigLocators.FUEL_ITEMS.format(fuel_type))
         self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
         element.click()
-        time.sleep(1)
         element.send_keys(Keys.ESCAPE)
-        time.sleep(1)
 
     def get_car_prices(self):
         shadow_root = self.get_shadow_root(root_type=ShadowRoot.CONFIGURATOR)
@@ -56,13 +48,13 @@ class ConfiguratorPage(BasePage):
             f"{datetime.now()}_price_range.txt")
 
         with open(filepath.absolute().as_posix(), 'w') as f:
-            f.write(f"Min Price: {self.min_price}\n")
-            f.write(f"Max Price: {self.max_price}")
+            f.write(f"min_price: {self.min_price}\n")
+            f.write(f"max_price: {self.max_price}")
 
     def filter_by_fuel(self, fuel_type: FuelType):
-        self.scroll_to_filters()
-        self.click_fuel_dropdown()
-        self.click_fuel_type(fuel_type)
+        self.scroll_page_down()  # using additional scroll because scrollIntoView doesn't always work properly
+        self.open_fuel_dropdown()
+        self.select_fuel_type(fuel_type)
 
     def define_boundary_car_prices(self):
         self.get_car_prices()

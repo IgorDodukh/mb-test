@@ -1,8 +1,8 @@
 from selenium.webdriver.common.by import By
 
+from scr.data.constants import ShadowRoot
 from scr.pom.locators.model_locators import ModelLocators
 from scr.pom.pages.base_page import BasePage
-from scr.data.constants import ShadowRoot
 
 
 class ModelPage(BasePage):

@@ -1,4 +1,6 @@
-from scr.data.constants import MainMenu, OurModelsMenu, HatchMenu, FuelType
+import pytest
+
+from scr.data.constants import MainMenu, ModelsMenu, HatchMenu, FuelType
 from scr.data.test_data import PriceRange
 from scr.pom.pages.configurator_page import ConfiguratorPage
 from scr.pom.pages.home_page import HomePage
@@ -7,22 +9,22 @@ from scr.pom.pages.model_page import ModelPage
 
 class TestAClassPrice:
 
-    def test_validate_a_class_price(self, browser):
+    @pytest.fixture(autouse=True)
+    def pre_test(self, browser):
         self.home_page = HomePage(browser)
         self.config_page = ConfiguratorPage(browser)
         self.model_page = ModelPage(browser)
-
         self.home_page.close_cookies_banner()
 
+    def test_validate_a_class_price(self):
         self.home_page.select_menu(MainMenu.OUR_MODELS)
-        self.home_page.select_submenu(OurModelsMenu.HATCHBACKS)
+        self.home_page.select_submenu(ModelsMenu.HATCHBACKS)
         self.home_page.select_sub_model_menu(HatchMenu.A_CLASS)
 
         actual_title = self.model_page.get_page_title()
         assert actual_title == "The new A-Class Hatchback", f"Page title '{actual_title}' does not match expected"
 
         self.model_page.select_build_your_car_button()
-
         self.config_page.filter_by_fuel(FuelType.DIESEL)
 
         self.config_page.save_full_page_screenshot()

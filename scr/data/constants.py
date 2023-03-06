@@ -15,7 +15,7 @@ class MainMenu:
     OUR_BRAND = "5"
 
 
-class OurModelsMenu:
+class ModelsMenu:
     SALOONS = "1"
     SUV = "2"
     ESTATES = "3"
@@ -54,3 +54,8 @@ class Menu:
     MAIN = "main"
     POPUP = "popup"
     SUB_MODEL = "sub_model"
+
+
+class SupportedBrowser:
+    CHROME = "chrome"
+    FIREFOX = "firefox"

@@ -38,3 +38,6 @@ class BasePage:
             f"{datetime.now()}_result.jpg")
         self.driver.save_screenshot(path.absolute().as_posix())
         self.driver.set_window_size(1920, 1080)
+
+    def scroll_page_down(self, x_coord=0, y_coord=800):
+        self.driver.execute_script(f'window.scrollBy({x_coord}, {y_coord})')

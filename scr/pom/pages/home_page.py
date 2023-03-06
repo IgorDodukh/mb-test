@@ -1,8 +1,8 @@
 from selenium.webdriver.common.by import By
 
+from scr.data.constants import MainMenu, ModelsMenu, ShadowRoot, HatchMenu
 from scr.pom.locators.home_locators import HomeLocators
 from scr.pom.pages.base_page import BasePage
-from scr.data.constants import MainMenu, OurModelsMenu, ShadowRoot, HatchMenu, Menu, Const
 
 
 class HomePage(BasePage):
@@ -24,7 +24,7 @@ class HomePage(BasePage):
         element = shadow_root.find_element(By.CSS_SELECTOR, HomeLocators.MAIN_MENU.format(menu_item))
         element.click()
 
-    def select_submenu(self, menu_item: OurModelsMenu):
+    def select_submenu(self, menu_item: ModelsMenu):
         shadow_root = self.get_shadow_root(ShadowRoot.SUB_MENU)
         element = shadow_root.find_element(By.CSS_SELECTOR, HomeLocators.OUR_MODELS_MENU.format(menu_item))
         element.click()
